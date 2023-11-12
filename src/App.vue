@@ -72,12 +72,31 @@ onMounted(() => {
         <img :src="anime.images.jpg.image_url" />
         <div class="details">
           <h3>{{ anime.title }}</h3>
-          <p :title="anime.synopsis" v-if="anime.synopsis">
-            {{ anime.synopsis.slice(0, 120) }}...
-          </p>
+          <p :title="anime.synopsis" v-if="anime.synopsis">{{ anime.synopsis.slice(0, 120) }}...</p>
           <span class="flex-1"></span>
           <button @click="addAnime(anime)">Add to my anime</button>
         </div>
+      </div>
+    </div>
+    <div class="myanime" v-if="my_anime.length > 0">
+      <h2>My Anime</h2>
+      <div v-for="anime in my_anime_asc" :key="anime" class="anime">
+        <img :src="anime.image" />
+        <h3>{{ anime.title }}</h3>
+        <div class="flex-1"></div>
+        <span class="episodes"> {{ anime.watched_episodes }} / {{ anime.total_episodes }} </span>
+        <button
+          v-if="anime.total_episodes !== anime.watched_episodes"
+          @click="increaseWatch(anime)"
+        >
+          +
+        </button>
+        <button
+          v-if="anime.watched_episodes > 0"
+          @click="decreaseWatch(anime)"
+        >
+          -
+        </button>
       </div>
     </div>
   </main>
